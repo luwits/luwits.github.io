@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KantinKu — Smart Canteen Management</title>
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/syne@5.0.8/700.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/syne@5.0.8/800.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/plus-jakarta-sans@5.0.8/400.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/plus-jakarta-sans@5.0.8/500.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/plus-jakarta-sans@5.0.8/600.css" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --teal: #1D9E75;
+    --teal-light: #E1F5EE;
+    --teal-dark: #085041;
+    --amber: #EF9F27;
+    --amber-light: #FAEEDA;
+    --coral: #D85A30;
+    --coral-light: #FAECE7;
+    --navy: #0C2340;
+    --navy-soft: #1a3a5c;
+    --white: #FAFAF8;
+    --gray-100: #F4F2ED;
+    --gray-200: #E0DED8;
+    --gray-500: #888780;
+    --gray-800: #2C2C2A;
+    --font-display: 'Syne', Georgia, serif;
+    --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --radius: 16px;
+    --radius-sm: 8px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--white);
+    color: var(--gray-800);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 5vw;
+    background: rgba(250,250,248,0.88);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--gray-200);
+  }
+
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--font-display);
+    font-size: 1.4rem; font-weight: 800;
+    color: var(--teal-dark);
+    text-decoration: none;
+  }
+
+  .logo-icon {
+    width: 38px; height: 38px;
+    background: var(--teal);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+  }
+
+  .nav-links { display: flex; gap: 1.8rem; list-style: none; align-items: center; }
+  .nav-links a {
+    text-decoration: none;
+    font-size: 0.9rem; font-weight: 500;
+    color: var(--gray-800);
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--teal); }
+
+  .nav-cta {
+    background: var(--teal) !important;
+    color: white !important;
+    padding: 0.5rem 1.2rem;
+    border-radius: 50px;
+    font-weight: 600 !important;
+    font-size: 0.875rem !important;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--teal-dark) !important; color: white !important; }
+
+  /* HERO */
+  #home {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 6rem 5vw 4rem;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% -10%, #9FE1CB44 0%, transparent 70%),
+      radial-gradient(ellipse 50% 40% at 90% 80%, #FAEEDA55 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 10% 70%, #FAECE733 0%, transparent 60%);
+  }
+
+  .hero-chip {
+    position: relative; z-index: 1;
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--teal-light);
+    color: var(--teal-dark);
+    font-size: 0.78rem; font-weight: 600;
+    padding: 0.4rem 1rem; border-radius: 50px;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .hero-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--teal);
+    animation: pulse 2s ease infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.65); }
+  }
+
+  .hero-title {
+    position: relative; z-index: 1;
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 800;
+    line-height: 1.06;
+    color: var(--navy);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-title .acc-teal { color: var(--teal); }
+  .hero-title .acc-amber { color: var(--amber); }
+
+  .hero-sub {
+    position: relative; z-index: 1;
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    color: var(--gray-500);
+    max-width: 580px;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-btns {
+    position: relative; z-index: 1;
+    display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+  }
+
+  .btn-primary {
+    background: var(--teal);
+    color: white;
+    padding: 0.875rem 2rem;
+    border-radius: 50px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-primary:hover { background: var(--teal-dark); transform: translateY(-2px); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--gray-800);
+    padding: 0.875rem 2rem;
+    border-radius: 50px;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 1rem;
+    text-decoration: none;
+    border: 1.5px solid var(--gray-200);
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--teal); color: var(--teal); }
+
+  .hero-scroll {
+    position: relative; z-index: 1;
+    margin-top: 4rem;
+    display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+    color: var(--gray-500);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .scroll-line {
+    width: 1px; height: 55px;
+    background: linear-gradient(to bottom, var(--teal), transparent);
+    animation: scrollDown 2.2s ease infinite;
+  }
+
+  @keyframes scrollDown {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  /* SECTIONS */
+  section { padding: 6rem 5vw; }
+
+  .section-chip {
+    display: inline-flex; align-items: center;
+    background: var(--teal-light);
+    color: var(--teal-dark);
+    font-size: 0.73rem; font-weight: 600;
+    padding: 0.35rem 0.9rem;
+    border-radius: 50px;
+    margin-bottom: 1.2rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .section-chip.inv { background: rgba(29,158,117,0.2); color: #9FE1CB; }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    color: var(--navy);
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  .section-title.inv { color: white; }
+
+  .section-sub {
+    font-size: 1rem;
+    color: var(--gray-500);
+    line-height: 1.75;
+    max-width: 600px;
+  }
+
+  .section-sub.inv { color: rgba(255,255,255,0.55); }
+
+  .section-header { margin-bottom: 4rem; }
+
+  /* ABOUT */
+  #about {
+    background: var(--gray-100);
+    border-radius: 40px;
+    margin: 0 2vw;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .about-visual { position: relative; height: 400px; }
+
+  .about-card {
+    position: absolute;
+    background: white;
+    border-radius: var(--radius);
+  }
+
+  .about-card.main {
+    left: 0; top: 0; right: 60px; bottom: 80px;
+    background: var(--navy);
+    color: white;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 2rem;
+    overflow: hidden;
+  }
+
+  .about-card.main::before {
+    content: '';
+    position: absolute; top: -50px; right: -30px;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: var(--teal);
+    opacity: 0.15;
+  }
+
+  .about-card.main::after {
+    content: '';
+    position: absolute; top: 40px; right: 40px;
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: var(--amber);
+    opacity: 0.1;
+  }
+
+  .big-num {
+    font-family: var(--font-display);
+    font-size: 5rem;
+    font-weight: 800;
+    color: var(--teal);
+    line-height: 1;
+  }
+
+  .big-num-label { color: rgba(255,255,255,0.65); font-size: 0.9rem; margin-top: 0.3rem; }
+
+  .about-card.stat {
+    right: 0; bottom: 20px;
+    padding: 1rem 1.4rem;
+    display: flex; align-items: center; gap: 1rem;
+    border: 1px solid var(--gray-200);
+    min-width: 220px;
+  }
+
+  .stat-icon {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    background: var(--teal-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem;
+  }
+
+  .stat-label { font-size: 0.78rem; color: var(--gray-500); margin-bottom: 2px; }
+  .stat-val { font-family: var(--font-display); font-weight: 700; font-size: 1rem; color: var(--navy); }
+
+  .about-text p {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 1.2rem;
+  }
+
+  .about-pills {
+    display: flex; flex-wrap: wrap; gap: 0.6rem;
+    margin-top: 1.8rem;
+  }
+
+  .pill {
+    background: var(--teal-light);
+    color: var(--teal-dark);
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    font-size: 0.82rem;
+    font-weight: 500;
+  }
+  .pill.amber { background: var(--amber-light); color: #633806; }
+  .pill.coral { background: var(--coral-light); color: #4A1B0C; }
+
+  /* FEATURES */
+  #features { background: white; }
+
+  .features-tabs {
+    display: flex; gap: 0.4rem;
+    margin-bottom: 3rem;
+    background: var(--gray-100);
+    padding: 0.4rem;
+    border-radius: 50px;
+    width: fit-content;
+  }
+
+  .tab-btn {
+    padding: 0.6rem 1.4rem;
+    border-radius: 50px;
+    border: none; cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 0.88rem; font-weight: 500;
+    transition: all 0.25s;
+    background: transparent;
+    color: var(--gray-500);
+  }
+
+  .tab-btn.active {
+    background: var(--teal);
+    color: white;
+  }
+
+  .tab-pane { display: none; animation: fadeIn 0.3s ease; }
+  .tab-pane.active { display: block; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.4rem;
+  }
+
+  .feature-card {
+    background: var(--gray-100);
+    border-radius: var(--radius);
+    padding: 1.8rem;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    border: 1px solid transparent;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.07);
+    border-color: var(--gray-200);
+    background: white;
+  }
+
+  .feat-icon {
+    width: 50px; height: 50px;
+    border-radius: 14px;
+    background: var(--teal);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.2rem;
+    font-size: 1.3rem;
+  }
+
+  .feat-icon.amber { background: var(--amber); }
+  .feat-icon.coral { background: var(--coral); }
+  .feat-icon.navy { background: var(--navy); }
+  .feat-icon.purple { background: #534AB7; }
+  .feat-icon.pink { background: #D4537E; }
+
+  .feature-card h3 {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 0.6rem;
+  }
+
+  .feature-card p {
+    font-size: 0.88rem;
+    color: var(--gray-500);
+    line-height: 1.65;
+  }
+
+  /* DESIGN PROCESS */
+  #process {
+    background: var(--navy);
+    border-radius: 40px;
+    margin: 0 2vw;
+  }
+
+  .process-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 4rem;
+  }
+
+  .process-timeline {
+    position: relative;
+    padding-left: 1.8rem;
+  }
+
+  .process-timeline::before {
+    content: '';
+    position: absolute; left: 4px; top: 6px; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--teal) 60%, transparent);
+    opacity: 0.4;
+  }
+
+  .process-item {
+    position: relative;
+    margin-bottom: 2.8rem;
+  }
+
+  .process-item::before {
+    content: '';
+    position: absolute; left: -1.52rem; top: 4px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--teal);
+    box-shadow: 0 0 0 3px rgba(29,158,117,0.25);
+  }
+
+  .process-num {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+
+  .process-item h3 {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.4rem;
+  }
+
+  .process-item p {
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.65;
+  }
+
+  /* VIDEO */
+  #video { background: white; text-align: center; }
+  #video .section-sub { margin: 0 auto; }
+
+  .video-wrapper {
+    margin-top: 3rem;
+    border-radius: var(--radius);
+    overflow: hidden;
+    aspect-ratio: 16/9;
+    background: var(--navy);
+    max-width: 880px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+  }
+
+  .video-wrapper iframe {
+    width: 100%; height: 100%;
+    border: none; display: block;
+  }
+
+  .video-placeholder {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 1.2rem;
+    background: linear-gradient(135deg, #0C2340 60%, #085041);
+    color: white;
+  }
+
+  .play-btn {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: var(--teal);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+    text-decoration: none;
+    border: none;
+  }
+
+  .play-btn:hover { transform: scale(1.1); background: #16805e; }
+  .play-btn svg { width: 28px; height: 28px; margin-left: 4px; }
+
+  .video-note { font-size: 0.78rem; color: rgba(255,255,255,0.35); }
+
+  /* TEAM */
+  #team { background: var(--gray-100); }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 1.4rem;
+  }
+
+  .team-card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: transform 0.25s, box-shadow 0.25s;
+    border: 1px solid transparent;
+  }
+
+  .team-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 56px rgba(0,0,0,0.08);
+    border-color: var(--gray-200);
+  }
+
+  .team-avatar {
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: white;
+  }
+
+  .av-1 { background: linear-gradient(135deg, var(--teal), var(--teal-dark)); }
+  .av-2 { background: linear-gradient(135deg, var(--amber), #BA7517); }
+  .av-3 { background: linear-gradient(135deg, #534AB7, #3C3489); }
+  .av-4 { background: linear-gradient(135deg, var(--coral), #993C1D); }
+  .av-5 { background: linear-gradient(135deg, #D4537E, #993556); }
+
+  .team-card h3 {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 0.3rem;
+    line-height: 1.3;
+  }
+
+  .team-nrp {
+    font-size: 0.78rem;
+    color: var(--gray-500);
+    font-family: monospace;
+    letter-spacing: 0.04em;
+  }
+
+  .team-role {
+    display: inline-block;
+    margin-top: 0.8rem;
+    background: var(--teal-light);
+    color: var(--teal-dark);
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.25rem 0.8rem;
+    border-radius: 50px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy);
+    color: white;
+    padding: 2.5rem 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-logo {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: white;
+    text-decoration: none;
+  }
+
+  footer p { font-size: 0.82rem; color: rgba(255,255,255,0.38); margin-top: 0.3rem; }
+
+  .footer-links {
+    display: flex; gap: 2rem; list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.45);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--teal); }
+
+  /* ANIMATIONS */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  .delay-1 { transition-delay: 0.1s; }
+  .delay-2 { transition-delay: 0.2s; }
+  .delay-3 { transition-delay: 0.3s; }
+  .delay-4 { transition-delay: 0.4s; }
+
+  /* RESPONSIVE */
+  @media (max-width: 820px) {
+    .about-grid, .process-grid { grid-template-columns: 1fr; }
+    .about-visual { height: 260px; }
+    .about-card.main { right: 40px; bottom: 70px; }
+    .about-card.stat { right: 0; bottom: 0; }
+    .nav-links { display: none; }
+    #about, #process { margin: 0 1vw; border-radius: 24px; }
+    footer { flex-direction: column; text-align: center; }
+    .footer-links { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#home" class="nav-logo">
+    <div class="logo-icon">🍽️</div>
+    KantinKu
+  </a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#features">Fitur</a></li>
+    <li><a href="#process">Proses</a></li>
+    <li><a href="#video">Video</a></li>
+    <li><a href="#team">Tim</a></li>
+    <li><a href="#video" class="nav-cta">Lihat Demo →</a></li>
+  </ul>
+</nav>
+
+<!-- HOME -->
+<section id="home">
+  <div class="hero-bg"></div>
+
+  <div class="hero-chip fade-up">
+    <div class="hero-dot"></div>
+    Inovasi Kantin Digital ITS
+  </div>
+
+  <h1 class="hero-title fade-up delay-1">
+    Kantin <span class="acc-teal">Lebih Cerdas,</span><br>
+    Makan <span class="acc-amber">Lebih Nyaman</span>
+  </h1>
+
+  <p class="hero-sub fade-up delay-2">
+    Solusi digital terintegrasi untuk mahasiswa dan penjual kantin kampus — cek kepadatan, jelajahi menu, hingga bayar QRIS, semua dalam satu platform.
+  </p>
+
+  <div class="hero-btns fade-up delay-3">
+    <a href="#features" class="btn-primary">Jelajahi Fitur ↓</a>
+    <a href="#about" class="btn-secondary">Tentang Proyek</a>
+  </div>
+
+  <div class="hero-scroll fade-up delay-4">
+    Scroll
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ABOUT US -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-visual">
+      <div class="about-card main">
+        <div class="big-num">5</div>
+        <div class="big-num-label">Inovator muda dari ITS Surabaya</div>
+      </div>
+      <div class="about-card stat">
+        <div class="stat-icon">🎓</div>
+        <div>
+          <div class="stat-label">Mata Kuliah</div>
+          <div class="stat-val">Interaksi Manusia-Komputer</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-text fade-up">
+      <div class="section-chip">Tentang Kami</div>
+      <h2 class="section-title">Kenapa KantinKu Hadir?</h2>
+      <p>
+        Antrian panjang, menu yang tidak jelas, dan pembayaran yang rumit adalah masalah nyata yang dihadapi mahasiswa di kantin kampus setiap harinya.
+      </p>
+      <p>
+        KantinKu adalah platform manajemen kantin kampus berbasis <em>human-centered design</em> — dirancang khusus untuk menjawab kebutuhan nyata mahasiswa sekaligus membantu penjual mengoptimalkan bisnis mereka.
+      </p>
+      <p>
+        Dikembangkan melalui proses riset mendalam, pengujian prototipe berulang, dan iterasi bersama pengguna nyata di kampus ITS Surabaya.
+      </p>
+      <div class="about-pills">
+        <span class="pill">🏫 ITS Surabaya</span>
+        <span class="pill amber">📱 Human-Centered Design</span>
+        <span class="pill coral">🔬 Design Thinking</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="section-header">
+    <div class="section-chip">Fitur Unggulan</div>
+    <h2 class="section-title">Dirancang untuk Semua</h2>
+    <p class="section-sub">Dua kelompok pengguna, satu platform. Setiap fitur lahir dari kebutuhan nyata di lapangan.</p>
+  </div>
+
+  <div class="features-tabs">
+    <button class="tab-btn active" onclick="switchTab('mhs', this)">🎓 Fitur Mahasiswa</button>
+    <button class="tab-btn" onclick="switchTab('seller', this)">🧑‍🍳 Fitur Penjual</button>
+  </div>
+
+  <div id="tab-mhs" class="tab-pane active">
+    <div class="features-grid">
+      <div class="feature-card fade-up">
+        <div class="feat-icon">📊</div>
+        <h3>Kepadatan Kantin</h3>
+        <p>Pantau tingkat kepadatan kantin secara real-time sebelum berangkat. Hindari antrian, pilih waktu terbaik untuk makan siang.</p>
+      </div>
+      <div class="feature-card fade-up delay-1">
+        <div class="feat-icon amber">🗺️</div>
+        <h3>Peta Kantin</h3>
+        <p>Navigasi interaktif di area kantin. Temukan warung favorit dengan mudah lewat peta visual yang intuitif.</p>
+      </div>
+      <div class="feature-card fade-up delay-2">
+        <div class="feat-icon coral">🏪</div>
+        <h3>Daftar Warung</h3>
+        <p>Jelajahi semua warung lengkap dengan rating, jam buka, dan spesialisasi masakan. Pilih yang paling cocok.</p>
+      </div>
+      <div class="feature-card fade-up delay-3">
+        <div class="feat-icon navy">📋</div>
+        <h3>Daftar Menu</h3>
+        <p>Lihat menu lengkap beserta harga, foto, dan ketersediaan — bahkan sebelum kamu berangkat ke kantin.</p>
+      </div>
+      <div class="feature-card fade-up delay-1">
+        <div class="feat-icon purple">📝</div>
+        <h3>Catatan Khusus</h3>
+        <p>Tambahkan permintaan spesial pada pesanan: tidak suka pedas, alergi tertentu, atau preferensi porsi.</p>
+      </div>
+      <div class="feature-card fade-up delay-2">
+        <div class="feat-icon">💳</div>
+        <h3>Cash & QRIS</h3>
+        <p>Bayar sesuai preferensi. Dukung pembayaran tunai atau QRIS untuk transaksi yang lebih cepat dan aman.</p>
+      </div>
+      <div class="feature-card fade-up delay-3">
+        <div class="feat-icon pink">⭐</div>
+        <h3>Feedback & Ulasan</h3>
+        <p>Berikan penilaian dan ulasan jujur untuk warung dan menu. Bantu komunitas kampus memilih yang terbaik.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-seller" class="tab-pane">
+    <div class="features-grid">
+      <div class="feature-card fade-up">
+        <div class="feat-icon">📋</div>
+        <h3>Kelola Menu</h3>
+        <p>Tambah, edit, atau nonaktifkan menu kapan saja. Update harga dan ketersediaan secara langsung dalam hitungan detik.</p>
+      </div>
+      <div class="feature-card fade-up delay-1">
+        <div class="feat-icon amber">📬</div>
+        <h3>Pesanan Masuk</h3>
+        <p>Terima notifikasi pesanan secara real-time. Pantau setiap pesanan dari diterima hingga selesai dengan dashboard yang bersih.</p>
+      </div>
+      <div class="feature-card fade-up delay-2">
+        <div class="feat-icon coral">📈</div>
+        <h3>Laporan Penjualan</h3>
+        <p>Analitik penjualan harian, mingguan, dan bulanan. Pahami tren menu populer dan jam ramai untuk optimasi bisnis.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DESIGN PROCESS -->
+<section id="process">
+  <div class="section-header">
+    <div class="section-chip inv">Proses Desain</div>
+    <h2 class="section-title inv">Dari Riset ke Realita</h2>
+    <p class="section-sub inv">Setiap keputusan desain didukung data dan pengujian nyata bersama pengguna sesungguhnya di kampus.</p>
+  </div>
+
+  <div class="process-grid">
+    <div>
+      <div class="process-timeline">
+        <div class="process-item fade-up">
+          <div class="process-num">01 — Needfinding</div>
+          <h3>Menggali Kebutuhan Nyata</h3>
+          <p>Observasi langsung di kantin kampus, wawancara mendalam dengan mahasiswa dan pedagang untuk mengidentifikasi pain points nyata sehari-hari.</p>
+        </div>
+        <div class="process-item fade-up delay-1">
+          <div class="process-num">02 — PoVs & Experience Prototype</div>
+          <h3>Sudut Pandang & Validasi Awal</h3>
+          <p>Merumuskan Point of View dari hasil needfinding, lalu membuat experience prototype cepat untuk memvalidasi asumsi tim sebelum masuk desain penuh.</p>
+        </div>
+        <div class="process-item fade-up delay-2">
+          <div class="process-num">03 — HMW</div>
+          <h3>How Might We</h3>
+          <p>Mengubah masalah menjadi peluang desain lewat pertanyaan HMW yang terfokus sebagai panduan sesi ideasi kreatif.</p>
+        </div>
+        <div class="process-item fade-up delay-3">
+          <div class="process-num">04 — Concept Video</div>
+          <h3>Visualisasi Konsep</h3>
+          <p>Video naratif yang mengkomunikasikan visi produk kepada stakeholder dan pengguna potensial sebelum masuk ke tahap prototyping.</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="process-timeline">
+        <div class="process-item fade-up">
+          <div class="process-num">05 — Lo-Fi Prototype</div>
+          <h3>Wireframe & Sketsa Alur</h3>
+          <p>Iterasi cepat dengan biaya rendah untuk menguji struktur informasi dan alur navigasi dasar bersama pengguna pertama.</p>
+        </div>
+        <div class="process-item fade-up delay-1">
+          <div class="process-num">06 — Med-Fi Prototype</div>
+          <h3>Prototipe Menengah</h3>
+          <p>Komponen UI lebih detail dengan pengujian usability pertama bersama mahasiswa nyata. Iterasi berdasarkan temuan langsung di lapangan.</p>
+        </div>
+        <div class="process-item fade-up delay-2">
+          <div class="process-num">07 — Heuristic Evaluation</div>
+          <h3>Evaluasi Heuristik Nielsen</h3>
+          <p>Identifikasi dan perbaiki masalah usability menggunakan 10 heuristik Jakob Nielsen sebelum masuk ke fase high-fidelity.</p>
+        </div>
+        <div class="process-item fade-up delay-3">
+          <div class="process-num">08 — Hi-Fi + Poster & Pitch Slide</div>
+          <h3>Produk Final & Presentasi</h3>
+          <p>Prototipe high-fidelity siap uji dengan visual final, dilengkapi poster desain dan slide pitch untuk pameran karya.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO PROTOTYPE -->
+<section id="video">
+  <div class="section-header" style="text-align:center;">
+    <div class="section-chip" style="margin: 0 auto 1.2rem; display:inline-flex;">Video Prototype</div>
+    <h2 class="section-title">Lihat KantinKu Beraksi</h2>
+    <p class="section-sub">Tonton video prototype untuk memahami pengalaman yang kami rancang — dari sisi mahasiswa maupun penjual.</p>
+  </div>
+
+  <div class="video-wrapper">
+    <!--
+      UNTUK TIM: Ganti VIDEO_ID dengan ID video YouTube kalian.
+      Contoh: jika URL YouTube adalah https://youtube.com/watch?v=dQw4w9WgXcQ
+      maka VIDEO_ID = dQw4w9WgXcQ
+      Uncomment baris iframe di bawah dan hapus div video-placeholder.
+    -->
+
+    <!--
+    <iframe
+      src="https://www.youtube.com/embed/VIDEO_ID"
+      title="KantinKu Prototype Video"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+    -->
+
+    <div class="video-placeholder">
+      <a href="https://youtube.com" class="play-btn" target="_blank" rel="noopener" aria-label="Tonton di YouTube">
+        <svg viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+      </a>
+      <p style="font-size:1rem; color:rgba(255,255,255,0.75);">Video Prototype KantinKu</p>
+      <p class="video-note">Tonton di YouTube →</p>
+    </div>
+  </div>
+</section>
+
+<!-- OUR TEAM -->
+<section id="team">
+  <div class="section-header">
+    <div class="section-chip">Tim Kami</div>
+    <h2 class="section-title">Orang di Balik KantinKu</h2>
+    <p class="section-sub">Lima mahasiswa ITS yang bersemangat memecahkan masalah nyata kampus lewat desain yang berpusat pada manusia.</p>
+  </div>
+
+  <div class="team-grid">
+    <div class="team-card fade-up">
+      <div class="team-avatar av-1">AA</div>
+      <h3>Ary Ratna Aida Safa</h3>
+      <div class="team-nrp">5026241029</div>
+      <div class="team-role">UI/UX Designer</div>
+    </div>
+    <div class="team-card fade-up delay-1">
+      <div class="team-avatar av-2">MW</div>
+      <h3>Milawati</h3>
+      <div class="team-nrp">5026241163</div>
+      <div class="team-role">UX Researcher</div>
+    </div>
+    <div class="team-card fade-up delay-2">
+      <div class="team-avatar av-3">BN</div>
+      <h3>Benedictus Nicholas</h3>
+      <div class="team-nrp">5026241187</div>
+      <div class="team-role">Interaction Designer</div>
+    </div>
+    <div class="team-card fade-up delay-3">
+      <div class="team-avatar av-4">IBP</div>
+      <h3>Ida Bagus PD Yudhana</h3>
+      <div class="team-nrp">5026241195</div>
+      <div class="team-role">Prototype Developer</div>
+    </div>
+    <div class="team-card fade-up delay-4">
+      <div class="team-avatar av-5">YK</div>
+      <h3>Yossi Kurniawan</h3>
+      <div class="team-nrp">5026241202</div>
+      <div class="team-role">Product Strategist</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <a href="#home" class="footer-logo">🍽️ KantinKu</a>
+    <p>© 2024 Tim KantinKu — Institut Teknologi Sepuluh Nopember</p>
+  </div>
+  <ul class="footer-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#features">Fitur</a></li>
+    <li><a href="#process">Proses</a></li>
+    <li><a href="#team">Tim</a></li>
+  </ul>
+</footer>
+
+<script>
+  function switchTab(name, btn) {
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
