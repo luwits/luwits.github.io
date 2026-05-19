@@ -34,7 +34,6 @@
   html { scroll-behavior: smooth; }
   body { font-family: var(--font-body); background: var(--cream); color: var(--text-dark); overflow-x: hidden; }
 
-  /* ── NAV ── */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
@@ -75,7 +74,6 @@
   }
   .nav-cta:hover { background: var(--red) !important; }
 
-  /* ── HERO ── */
   #home {
     min-height: 100vh;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -91,7 +89,6 @@
       radial-gradient(ellipse 40% 35% at 12% 65%, #C93B1211 0%, transparent 55%);
   }
 
-  /* Decorative gear bg */
   .hero-gear {
     position: absolute; z-index: 0;
     opacity: 0.04;
@@ -127,9 +124,16 @@
   .hero-logo-big {
     position: relative; z-index: 1;
     margin-bottom: 1.8rem;
+    width: 110px;
+    height: 110px;
   }
 
-  .hero-logo-big svg { width: 110px; height: 110px; filter: drop-shadow(0 8px 24px #F07A1A44); }
+  .hero-logo-big img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: drop-shadow(0 8px 24px #F07A1A44);
+  }
 
   .hero-title {
     position: relative; z-index: 1;
@@ -209,7 +213,6 @@
     100% { transform: scaleY(0); transform-origin: bottom; }
   }
 
-  /* ── SECTIONS SHARED ── */
   section { padding: 6rem 5vw; }
 
   .section-chip {
@@ -234,48 +237,91 @@
 
   .section-header { margin-bottom: 4rem; }
 
-  /* ── ABOUT ── */
   #about { background: var(--warm-gray); border-radius: 40px; margin: 0 2vw; }
 
   .about-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 4rem; align-items: center; }
 
-  .about-visual { position: relative; height: 400px; }
-
-  .about-card { position: absolute; background: white; border-radius: var(--radius); }
-
-  .about-card.main {
-    left: 0; top: 0; right: 60px; bottom: 80px;
-    background: linear-gradient(145deg, var(--red-dark), var(--red), var(--orange));
-    color: white; display: flex; flex-direction: column; justify-content: flex-end;
-    padding: 2rem; overflow: hidden;
-  }
-  .about-card.main::before {
-    content: ''; position: absolute; top: -40px; right: -30px;
-    width: 200px; height: 200px; border-radius: 50%;
-    background: white; opacity: 0.07;
-  }
-  .about-card.main::after {
-    content: ''; position: absolute; top: 30px; left: 30px;
-    width: 80px; height: 80px; border-radius: 50%;
-    background: white; opacity: 0.05;
+  .about-visual {
+    position: relative;
+    min-height: 520px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .big-num { font-family: var(--font-display); font-size: 5rem; font-weight: 800; color: white; line-height: 1; }
-  .big-num-label { color: rgba(255,255,255,0.65); font-size: 0.9rem; margin-top: 0.3rem; }
+  .about-glow {
+    position: absolute;
+    inset: 12% 8%;
+    border-radius: 36px;
+    background:
+      radial-gradient(circle at top, rgba(240,122,26,0.2), transparent 38%),
+      radial-gradient(circle at bottom right, rgba(201,59,18,0.16), transparent 34%),
+      linear-gradient(180deg, rgba(255,255,255,0.7), rgba(255,255,255,0.18));
+    filter: blur(4px);
+  }
 
-  .about-card.stat {
-    right: 0; bottom: 20px; padding: 1rem 1.4rem;
-    display: flex; align-items: center; gap: 1rem;
-    border: 1px solid var(--border); min-width: 220px;
-    box-shadow: 0 4px 20px #0000000a;
+  .about-app-frame {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 340px);
+    padding: 18px;
+    border-radius: 40px;
+    background: linear-gradient(145deg, #121212, #2d2d2d 28%, #090909 72%, #3b3b3b);
+    box-shadow: 0 24px 54px rgba(42,26,14,0.22);
   }
-  .stat-icon {
-    width: 44px; height: 44px; border-radius: 10px;
-    background: var(--orange-light);
-    display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+
+  .about-app-screen {
+    position: relative;
+    background: white;
+    border-radius: 30px;
+    overflow: hidden;
+    border: 3px solid #0e0e0e;
   }
-  .stat-label { font-size: 0.78rem; color: var(--text-light); margin-bottom: 2px; }
-  .stat-val { font-family: var(--font-display); font-weight: 700; font-size: 1rem; color: var(--text-dark); }
+
+  .about-app-screen img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .about-app-notch {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 108px;
+    height: 22px;
+    border-radius: 999px;
+    background: #050505;
+    z-index: 2;
+  }
+
+  .about-app-badge {
+    position: absolute;
+    right: -16px;
+    bottom: 26px;
+    z-index: 2;
+    max-width: 180px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 0.95rem 1rem;
+    box-shadow: 0 16px 30px rgba(42,26,14,0.1);
+  }
+
+  .about-app-badge strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    color: var(--text-dark);
+    margin-bottom: 0.2rem;
+  }
+
+  .about-app-badge span {
+    font-size: 0.82rem;
+    color: var(--text-mid);
+    line-height: 1.55;
+  }
 
   .about-text p { font-size: 1rem; color: var(--text-mid); line-height: 1.82; margin-bottom: 1.2rem; }
 
@@ -289,7 +335,6 @@
   .pill.red { background: #FDE8E3; color: var(--red-dark); border-color: #C93B1222; }
   .pill.warm { background: var(--cream-2); color: var(--text-mid); border-color: var(--border); }
 
-  /* ── FEATURES ── */
   #features { background: white; }
 
   .features-tabs {
@@ -329,27 +374,112 @@
   .feature-card h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.6rem; }
   .feature-card p { font-size: 0.88rem; color: var(--text-mid); line-height: 1.65; }
 
-  /* ── PROCESS ── */
-  #process { background: var(--text-dark); border-radius: 40px; margin: 0 2vw; }
-
-  .process-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 4rem; }
-
-  .process-timeline { position: relative; padding-left: 1.8rem; }
-  .process-timeline::before {
-    content: ''; position: absolute; left: 4px; top: 6px; bottom: 0;
-    width: 1px; background: linear-gradient(to bottom, var(--orange) 60%, transparent); opacity: 0.4;
+  #process {
+    background:
+      radial-gradient(circle at top left, rgba(240,122,26,0.18), transparent 28%),
+      radial-gradient(circle at bottom right, rgba(201,59,18,0.16), transparent 30%),
+      var(--text-dark);
+    border-radius: 40px;
+    margin: 0 2vw;
   }
-  .process-item { position: relative; margin-bottom: 2.8rem; }
-  .process-item::before {
-    content: ''; position: absolute; left: -1.52rem; top: 4px;
-    width: 10px; height: 10px; border-radius: 50%;
-    background: var(--orange); box-shadow: 0 0 0 3px rgba(240,122,26,0.25);
-  }
-  .process-num { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--orange); font-weight: 700; margin-bottom: 0.3rem; }
-  .process-item h3 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; color: white; margin-bottom: 0.4rem; }
-  .process-item p { font-size: 0.875rem; color: rgba(255,255,255,0.48); line-height: 1.65; }
 
-  /* ── VIDEO ── */
+  .process-showcase {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.6rem;
+  }
+
+  .process-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 22px;
+    padding: 1rem;
+    backdrop-filter: blur(8px);
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .process-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(250,201,122,0.38);
+    box-shadow: 0 18px 42px rgba(0,0,0,0.22);
+  }
+
+  .process-thumb {
+    aspect-ratio: 1.55 / 1;
+    border-radius: 16px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .process-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .process-step {
+    color: var(--orange-mid);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.45rem;
+  }
+
+  .process-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    color: white;
+    margin-bottom: 0.55rem;
+    line-height: 1.2;
+  }
+
+  .process-card p {
+    color: rgba(255,255,255,0.62);
+    font-size: 0.9rem;
+    line-height: 1.65;
+    margin-bottom: 1rem;
+    min-height: 4.4rem;
+  }
+
+  .process-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .process-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 48px;
+    padding: 0.82rem 1rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.22);
+    background: rgba(255,255,255,0.04);
+    color: white;
+    text-decoration: none;
+    font-size: 0.92rem;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.2s ease;
+  }
+
+  .process-link:hover {
+    background: linear-gradient(135deg, var(--orange), var(--red));
+    border-color: transparent;
+    transform: translateY(-2px);
+  }
+
+  .process-link.alt {
+    color: var(--orange-mid);
+    border-color: rgba(250,201,122,0.28);
+  }
+
   #video { background: white; text-align: center; }
   #video .section-sub { margin: 0 auto; }
 
@@ -376,7 +506,6 @@
   .play-btn svg { width: 28px; height: 28px; margin-left: 4px; }
   .video-note { font-size: 0.78rem; color: rgba(255,255,255,0.45); }
 
-  /* ── TEAM ── */
   #team { background: var(--warm-gray); }
 
   .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1.4rem; }
@@ -401,15 +530,7 @@
 
   .team-card h3 { font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; color: var(--text-dark); margin-bottom: 0.3rem; line-height: 1.3; }
   .team-nrp { font-size: 0.78rem; color: var(--text-light); font-family: monospace; letter-spacing: 0.04em; }
-  .team-role {
-    display: inline-block; margin-top: 0.8rem;
-    background: var(--orange-light); color: var(--red);
-    font-size: 0.72rem; font-weight: 700;
-    padding: 0.25rem 0.8rem; border-radius: 50px;
-    border: 1px solid #F07A1A22;
-  }
 
-  /* ── FOOTER ── */
   footer {
     background: var(--text-dark); color: white;
     padding: 2.5rem 5vw;
@@ -422,7 +543,6 @@
   .footer-links a { font-size: 0.85rem; color: rgba(255,255,255,0.42); text-decoration: none; transition: color 0.2s; }
   .footer-links a:hover { color: var(--orange); }
 
-  /* ── ANIM ── */
   .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
   .fade-up.visible { opacity: 1; transform: translateY(0); }
   .delay-1 { transition-delay: 0.1s; }
@@ -430,26 +550,40 @@
   .delay-3 { transition-delay: 0.3s; }
   .delay-4 { transition-delay: 0.4s; }
 
+  @media (max-width: 1100px) {
+    .process-showcase { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
   @media (max-width: 820px) {
-    .about-grid, .process-grid { grid-template-columns: 1fr; }
-    .about-visual { height: 260px; }
-    .about-card.main { right: 40px; bottom: 70px; }
-    .about-card.stat { right: 0; bottom: 0; }
+    .about-grid { grid-template-columns: 1fr; }
+    .about-visual { min-height: 480px; }
+    .about-app-badge { right: 6px; bottom: 14px; }
     .nav-links { display: none; }
     #about, #process { margin: 0 1vw; border-radius: 24px; }
     footer { flex-direction: column; text-align: center; }
     .footer-links { justify-content: center; }
   }
+
+  @media (max-width: 640px) {
+    .process-showcase { grid-template-columns: 1fr; }
+    .process-card p { min-height: auto; }
+    .about-visual { min-height: 420px; }
+    .about-app-frame { width: min(100%, 280px); }
+    .about-app-badge {
+      position: static;
+      margin-top: 1rem;
+      max-width: none;
+      width: min(100%, 280px);
+    }
+  }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <a href="#home" class="nav-logo">
     <div class="nav-logo-img">
-      <!-- Inline gear logo SVG matching LUWITS branding -->
-    <img src="icon.png" alt="LUWITS Logo" style="width: 100%; height: 100%; object-fit: cover;">
+      <img src="icon.png" alt="LUWITS Logo" style="width: 100%; height: 100%; object-fit: cover;">
     </div>
     LUWITS
   </a>
@@ -464,11 +598,9 @@
   </ul>
 </nav>
 
-<!-- HOME -->
 <section id="home">
   <div class="hero-bg"></div>
 
-  <!-- decorative gears -->
   <svg class="hero-gear g1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
     <path fill="#F07A1A" d="M50 10 l5 8 9-2 3 9 9 1 0 9 8 4-4 8 5 8-7 6-1 9-9 1-5 8-8-3-7 6-7-6-8 3-5-8-9-1-1-9-7-6 5-8-4-8 8-4 0-9 9-1 3-9 9 2z"/>
     <circle cx="50" cy="50" r="20" fill="white"/>
@@ -478,17 +610,20 @@
     <circle cx="50" cy="50" r="20" fill="white"/>
   </svg>
 
-  <!-- tes -->
-  <!-- Big logo -->
+  <div class="hero-chip fade-up">
+    <div class="hero-dot"></div>
+    Aplikasi Kantin Cerdas ITS
+  </div>
+
   <div class="hero-logo-big fade-up delay-1">
-    <img src="icon.png" alt="LUWITS Logo" style="width: 75%; height: 75%; object-fit: cover;">
+    <img src="icon.png" alt="LUWITS Logo">
   </div>
 
   <h1 class="hero-title fade-up delay-1">LUWITS</h1>
   <p class="hero-slogan fade-up delay-2">"Pesan di Kelas, Luwe pun Lepas"</p>
 
   <p class="hero-sub fade-up delay-2">
-    Aplikasi yang membantu mahasiswa ITS mengakses makanan kantin lebih cepat dan praktis, informasi menu real-time, indikator kepadatan, pre-order, hingga sinkronisasi stok untuk penjual.
+    Aplikasi yang membantu mahasiswa ITS mengakses makanan kantin lebih cepat dan praktis — informasi menu real-time, indikator kepadatan, pre-order, hingga sinkronisasi stok untuk penjual.
   </p>
 
   <div class="hero-btns fade-up delay-3">
@@ -502,19 +637,14 @@
   </div>
 </section>
 
-<!-- ABOUT US -->
 <section id="about">
   <div class="about-grid">
     <div class="about-visual">
-      <div class="about-card main">
-        <div class="big-num">5</div>
-        <div class="big-num-label">Inovator muda dari ITS Surabaya</div>
-      </div>
-      <div class="about-card stat">
-        <div class="stat-icon">🎓</div>
-        <div>
-          <div class="stat-label">Mata Kuliah</div>
-          <div class="stat-val">Interaksi Manusia–Komputer</div>
+      <div class="about-glow" aria-hidden="true"></div>
+      <div class="about-app-frame fade-up">
+        <div class="about-app-screen">
+          <div class="about-app-notch" aria-hidden="true"></div>
+          <img src="luwits.png" alt="Tampilan aplikasi LUWITS">
         </div>
       </div>
     </div>
@@ -531,16 +661,10 @@
       <p>
         Dikembangkan melalui proses riset mendalam dan pendekatan <em>human-centered design</em> bersama mahasiswa dan pedagang kantin ITS yang nyata.
       </p>
-      <div class="about-pills">
-        <span class="pill">🏫 ITS Surabaya</span>
-        <span class="pill red">📱 Human-Centered Design</span>
-        <span class="pill warm">🔬 Design Thinking</span>
-      </div>
     </div>
   </div>
 </section>
 
-<!-- FEATURES -->
 <section id="features">
   <div class="section-header">
     <div class="section-chip">Fitur Unggulan</div>
@@ -572,7 +696,7 @@
       </div>
       <div class="feature-card fade-up delay-3">
         <div class="feat-icon dark">📋</div>
-        <h3>Daftar Menu & Stok Real-Time</h3>
+        <h3>Daftar Menu &amp; Stok Real-Time</h3>
         <p>Lihat menu lengkap beserta harga, foto, dan ketersediaan stok yang diperbarui langsung dari penjual.</p>
       </div>
       <div class="feature-card fade-up delay-1">
@@ -587,12 +711,12 @@
       </div>
       <div class="feature-card fade-up delay-3">
         <div class="feat-icon">💳</div>
-        <h3>Cash & QRIS</h3>
+        <h3>Cash &amp; QRIS</h3>
         <p>Bayar sesuai preferensi — tunai atau QRIS. Transaksi lebih cepat, aman, dan tanpa uang kembalian.</p>
       </div>
       <div class="feature-card fade-up delay-1">
         <div class="feat-icon light">⭐</div>
-        <h3>Feedback & Ulasan</h3>
+        <h3>Feedback &amp; Ulasan</h3>
         <p>Berikan penilaian jujur untuk warung dan menu. Bantu sesama mahasiswa memilih pilihan terbaik.</p>
       </div>
     </div>
@@ -624,67 +748,114 @@
   </div>
 </section>
 
-<!-- DESIGN PROCESS -->
 <section id="process">
   <div class="section-header">
     <div class="section-chip inv">Proses Desain</div>
     <h2 class="section-title inv">Dari Riset ke Realita</h2>
-    <p class="section-sub inv">Setiap keputusan desain didukung data dan pengujian nyata bersama pengguna sesungguhnya di kampus ITS.</p>
+    <p class="section-sub inv">Saya ubah bagian ini jadi showcase visual seperti referensi: tiap tahap punya preview dan tombol yang bisa langsung mengarah ke dokumen, prototype, atau presentasi terkait.</p>
   </div>
 
-  <div class="process-grid">
-    <div>
-      <div class="process-timeline">
-        <div class="process-item fade-up">
-          <div class="process-num">01 — Needfinding</div>
-          <h3>Menggali Kebutuhan Nyata</h3>
-          <p>Observasi langsung di kantin ITS, wawancara mendalam dengan mahasiswa dan pedagang untuk mengidentifikasi pain points sehari-hari.</p>
-        </div>
-        <div class="process-item fade-up delay-1">
-          <div class="process-num">02 — PoVs & Experience Prototype</div>
-          <h3>Sudut Pandang & Validasi Awal</h3>
-          <p>Merumuskan Point of View dari hasil needfinding, lalu membuat experience prototype cepat untuk memvalidasi asumsi sebelum masuk desain penuh.</p>
-        </div>
-        <div class="process-item fade-up delay-2">
-          <div class="process-num">03 — HMW</div>
-          <h3>How Might We</h3>
-          <p>Mengubah masalah menjadi peluang desain lewat pertanyaan HMW yang terfokus sebagai panduan sesi ideasi kreatif.</p>
-        </div>
-        <div class="process-item fade-up delay-3">
-          <div class="process-num">04 — Concept Video</div>
-          <h3>Visualisasi Konsep</h3>
-          <p>Video naratif yang mengkomunikasikan visi produk kepada stakeholder dan pengguna potensial sebelum masuk ke tahap prototyping.</p>
-        </div>
+  <div class="process-showcase">
+    <article class="process-card fade-up">
+      <div class="process-thumb">
+        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80" alt="Need Finding">
       </div>
-    </div>
-    <div>
-      <div class="process-timeline">
-        <div class="process-item fade-up">
-          <div class="process-num">05 — Lo-Fi Prototype</div>
-          <h3>Wireframe & Sketsa Alur</h3>
-          <p>Iterasi cepat dengan biaya rendah untuk menguji struktur informasi dan alur navigasi dasar bersama pengguna pertama.</p>
-        </div>
-        <div class="process-item fade-up delay-1">
-          <div class="process-num">06 — Med-Fi Prototype</div>
-          <h3>Prototipe Menengah</h3>
-          <p>Komponen UI lebih detail dengan pengujian usability pertama bersama mahasiswa nyata. Iterasi dari temuan langsung di lapangan.</p>
-        </div>
-        <div class="process-item fade-up delay-2">
-          <div class="process-num">07 — Heuristic Evaluation</div>
-          <h3>Evaluasi Heuristik Nielsen</h3>
-          <p>Identifikasi dan perbaiki masalah usability menggunakan 10 heuristik Jakob Nielsen sebelum masuk ke fase high-fidelity.</p>
-        </div>
-        <div class="process-item fade-up delay-3">
-          <div class="process-num">08 — Hi-Fi + Poster & Pitch Slide</div>
-          <h3>Produk Final & Presentasi</h3>
-          <p>Prototipe high-fidelity siap uji dengan visual final, dilengkapi poster desain dan slide pitch untuk pameran karya.</p>
-        </div>
+      <div class="process-step">01 — Needfinding</div>
+      <h3>Need Finding</h3>
+      <p>Temuan awal dari observasi, wawancara, dan pain points pengguna nyata di kantin ITS.</p>
+      <div class="process-actions">
+        <a class="process-link" href="https://example.com/needfinding" target="_blank" rel="noopener">Explore Our Insights!</a>
       </div>
-    </div>
+    </article>
+
+    <article class="process-card fade-up delay-1">
+      <div class="process-thumb">
+        <img src="https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=900&q=80" alt="POV">
+      </div>
+      <div class="process-step">02 — POV</div>
+      <h3>POV</h3>
+      <p>Rumusan point of view yang merangkum kebutuhan inti mahasiswa dan penjual.</p>
+      <div class="process-actions">
+        <a class="process-link" href="https://example.com/pov" target="_blank" rel="noopener">Check Out the POV!</a>
+      </div>
+    </article>
+
+    <article class="process-card fade-up delay-2">
+      <div class="process-thumb">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/26/Design_Thinking_Workshop_WMDE_Prototyp_Wiki-Dorf.jpg" alt="Experience Prototype">
+      </div>
+      <div class="process-step">03 — Experience Prototype</div>
+      <h3>Experience Prototype</h3>
+      <p>Validasi cepat pengalaman inti pengguna sebelum desain masuk ke tahap yang lebih detail.</p>
+      <div class="process-actions">
+        <a class="process-link" href="https://example.com/experience-prototype" target="_blank" rel="noopener">Try Our Prototype!</a>
+      </div>
+    </article>
+
+    <article class="process-card fade-up delay-3">
+      <div class="process-thumb">
+        <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=900&q=80" alt="Concept Video">
+      </div>
+      <div class="process-step">04 — Concept Video</div>
+      <h3>Concept Video</h3>
+      <p>Visualisasi alur cerita produk agar stakeholder bisa memahami visi LUWITS dengan cepat.</p>
+      <div class="process-actions">
+        <a class="process-link" href="https://example.com/concept-video" target="_blank" rel="noopener">Watch Our Concept!</a>
+        <a class="process-link alt" href="https://example.com/presentation" target="_blank" rel="noopener">See Our Presentation!</a>
+      </div>
+    </article>
+
+    <article class="process-card fade-up">
+      <div class="process-thumb">
+        <img src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=900&q=80" alt="Lo-Fi">
+      </div>
+      <div class="process-step">05 — Lo-Fi</div>
+      <h3>Lo-Fi</h3>
+      <p>Sketsa struktur informasi dan alur utama untuk menguji fondasi pengalaman pengguna.</p>
+      <div class="process-actions">
+        <a class="process-link" href="https://example.com/lofi" target="_blank" rel="noopener">View Our Lo-Fi Designs!</a>
+      </div>
+    </article>
+
+    <article class="process-card fade-up delay-1">
+      <div class="process-thumb">
+        <img src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=900&q=80" alt="Med-Fi">
+      </div>
+      <div class="process-step">06 — Med-Fi</div>
+      <h3>Med-Fi</h3>
+      <p>Desain menengah dengan komponen lebih matang untuk diuji pada skenario penggunaan nyata.</p>
+      <div class="process-actions">
+        <a class="process-link" href="https://example.com/medfi" target="_blank" rel="noopener">See Our Med-Fi Design!</a>
+        <a class="process-link alt" href="https://example.com/medfi-readme" target="_blank" rel="noopener">README Med-Fi</a>
+      </div>
+    </article>
+
+    <article class="process-card fade-up delay-2">
+      <div class="process-thumb">
+        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=80" alt="Heuristic Evaluation">
+      </div>
+      <div class="process-step">07 — Heuristic Evaluation</div>
+      <h3>Heuristic Evaluation</h3>
+      <p>Evaluasi usability berbasis heuristik Nielsen untuk mengasah detail dan mengurangi friksi.</p>
+      <div class="process-actions">
+        <a class="process-link" href="https://example.com/heuristic-evaluation" target="_blank" rel="noopener">View the Result!</a>
+      </div>
+    </article>
+
+    <article class="process-card fade-up delay-3">
+      <div class="process-thumb">
+        <img src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=900&q=80" alt="Poster and Pitch Slide">
+      </div>
+      <div class="process-step">08 — Poster &amp; Pitch Slide</div>
+      <h3>Poster &amp; Pitch Slide</h3>
+      <p>Materi final untuk showcase, presentasi, dan penyampaian value LUWITS secara meyakinkan.</p>
+      <div class="process-actions">
+        <a class="process-link" href="https://example.com/poster-pitch" target="_blank" rel="noopener">View Our Poster &amp; Pitch!</a>
+      </div>
+    </article>
   </div>
 </section>
 
-<!-- VIDEO PROTOTYPE -->
 <section id="video">
   <div class="section-header" style="text-align:center;">
     <div class="section-chip" style="margin: 0 auto 1.2rem; display:inline-flex;">Video Prototype</div>
@@ -693,18 +864,6 @@
   </div>
 
   <div class="video-wrapper">
-    <!--
-      UNTUK TIM: Uncomment iframe di bawah dan ganti VIDEO_ID dengan ID YouTube kalian.
-      Hapus div.video-placeholder setelah itu.
-    -->
-    <!--
-    <iframe
-      src="https://www.youtube.com/embed/VIDEO_ID"
-      title="LUWITS Prototype Video"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen>
-    </iframe>
-    -->
     <div class="video-placeholder">
       <a href="https://youtube.com" class="play-btn" target="_blank" rel="noopener" aria-label="Tonton di YouTube">
         <svg viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
@@ -715,7 +874,6 @@
   </div>
 </section>
 
-<!-- OUR TEAM -->
 <section id="team">
   <div class="section-header">
     <div class="section-chip">Tim Kami</div>
@@ -728,36 +886,30 @@
       <div class="team-avatar av-1">AA</div>
       <h3>Ary Ratna Aida Safa</h3>
       <div class="team-nrp">5026241029</div>
-
     </div>
     <div class="team-card fade-up delay-1">
       <div class="team-avatar av-2">MW</div>
       <h3>Milawati</h3>
       <div class="team-nrp">5026241163</div>
-
     </div>
     <div class="team-card fade-up delay-2">
       <div class="team-avatar av-3">BN</div>
       <h3>Benedictus Nicholas</h3>
       <div class="team-nrp">5026241187</div>
-
     </div>
     <div class="team-card fade-up delay-3">
       <div class="team-avatar av-4">IBP</div>
       <h3>Ida Bagus Putu Dharma Yudhana</h3>
       <div class="team-nrp">5026241195</div>
-  
     </div>
     <div class="team-card fade-up delay-4">
       <div class="team-avatar av-5">YK</div>
       <h3>Yossi Kurniawan</h3>
       <div class="team-nrp">5026241202</div>
-
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-brand">
     <svg viewBox="0 0 60 60" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
@@ -791,18 +943,22 @@
 
 <script>
   function switchTab(name, btn) {
-    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach((p) => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach((b) => b.classList.remove('active'));
     document.getElementById('tab-' + name).classList.add('active');
     btn.classList.add('active');
   }
 
   const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      }
     });
   }, { threshold: 0.1 });
-  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+  document.querySelectorAll('.fade-up').forEach((el) => obs.observe(el));
 </script>
 </body>
 </html>
