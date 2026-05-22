@@ -276,9 +276,22 @@
     border-radius: 30px;
     overflow: hidden;
     border: 3px solid #0e0e0e;
+    touch-action: pan-y;
+    user-select: none;
   }
 
-  .about-app-screen img {
+  .about-carousel {
+    display: flex;
+    transition: transform 0.35s ease;
+    will-change: transform;
+  }
+
+  .about-slide {
+    min-width: 100%;
+    flex: 0 0 100%;
+  }
+
+  .about-slide img {
     width: 100%;
     display: block;
     object-fit: cover;
@@ -321,6 +334,50 @@
     font-size: 0.82rem;
     color: var(--text-mid);
     line-height: 1.55;
+  }
+
+  .about-slider-ui {
+    position: absolute;
+    left: 50%;
+    bottom: 18px;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.5rem 0.7rem;
+    border-radius: 999px;
+    background: rgba(14,14,14,0.78);
+    backdrop-filter: blur(8px);
+  }
+
+  .about-dot {
+    width: 10px;
+    height: 10px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.35);
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+
+  .about-dot.active {
+    background: white;
+    transform: scale(1.15);
+  }
+
+  .about-swipe-note {
+    position: absolute;
+    top: 22px;
+    right: 18px;
+    z-index: 3;
+    padding: 0.35rem 0.6rem;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.88);
+    color: var(--text-mid);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
   }
 
   .about-text p { font-size: 1rem; color: var(--text-mid); line-height: 1.82; margin-bottom: 1.2rem; }
@@ -639,7 +696,22 @@
       <div class="about-app-frame fade-up">
         <div class="about-app-screen">
           <div class="about-app-notch" aria-hidden="true"></div>
-          <img src="luwits.png" alt="Tampilan aplikasi LUWITS">
+          <div class="about-carousel" id="aboutCarousel">
+            <div class="about-slide">
+              <img src="luwits.png" alt="Tampilan pertama aplikasi LUWITS">
+            </div>
+            <div class="about-slide">
+              <img src="luwits1.png" alt="Tampilan kedua aplikasi LUWITS">
+            </div>
+            <div class="about-slide">
+              <img src="luwits2.png" alt="Tampilan ketiga aplikasi LUWITS">
+            </div>
+          </div>
+          <div class="about-slider-ui" aria-label="Navigasi gambar aplikasi LUWITS">
+            <button class="about-dot active" type="button" data-about-slide="0" aria-label="Lihat gambar 1"></button>
+            <button class="about-dot" type="button" data-about-slide="1" aria-label="Lihat gambar 2"></button>
+            <button class="about-dot" type="button" data-about-slide="2" aria-label="Lihat gambar 3"></button>
+          </div>
         </div>
       </div>
     </div>
@@ -771,7 +843,7 @@
       <h3>POV</h3>
       <p>Rumusan point of view yang merangkum kebutuhan inti mahasiswa dan penjual.</p>
       <div class="process-actions">
-        <a class="process-link" href="https://example.com/pov" target="_blank" rel="noopener">Check Out the POV!</a>
+        <a class="process-link" href="https://drive.google.com/file/d/1PPqyS-XmFZCAfxeTozZMQsJpghD7w5Yv/view?usp=sharing" target="_blank" rel="noopener">Check Out the POV!</a>
       </div>
     </article>
 
@@ -783,7 +855,7 @@
       <h3>Experience Prototype</h3>
       <p>Validasi cepat pengalaman inti pengguna sebelum desain masuk ke tahap yang lebih detail.</p>
       <div class="process-actions">
-        <a class="process-link" href="https://example.com/experience-prototype" target="_blank" rel="noopener">Try Our Prototype!</a>
+        <a class="process-link" href="https://www.figma.com/proto/pPKDnjZ9Obh0IyRYMVgSCC/Workspace-DPP-Kelompok-5?node-id=27-225&p=f&t=p99Y1gLqt4CruAJB-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=27%3A225&show-proto-sidebar=1" target="_blank" rel="noopener">Try Our Prototype!</a>
       </div>
     </article>
 
@@ -795,8 +867,8 @@
       <h3>Concept Video</h3>
       <p>Visualisasi alur cerita produk agar stakeholder bisa memahami visi LUWITS dengan cepat.</p>
       <div class="process-actions">
-        <a class="process-link" href="https://example.com/concept-video" target="_blank" rel="noopener">Watch Our Concept!</a>
-        <a class="process-link alt" href="https://example.com/presentation" target="_blank" rel="noopener">See Our Presentation!</a>
+        <a class="process-link" href="https://drive.google.com/file/d/1QzZnbc1C4KLmE89x2ltou-a2jvdjpQhB/view?usp=sharing" target="_blank" rel="noopener">Watch Our Concept!</a>
+        <a class="process-link alt" href="https://docs.google.com/presentation/d/1kIisE-GiJkyu7ZuPYGJ_EN-LDj5MLdrv-fB1i5Fero0/edit?usp=sharing" target="_blank" rel="noopener">See Our Presentation!</a>
       </div>
     </article>
 
@@ -808,10 +880,11 @@
       <h3>Lo-Fi</h3>
       <p>Sketsa struktur informasi dan alur utama untuk menguji fondasi pengalaman pengguna.</p>
       <div class="process-actions">
-        <a class="process-link" href="https://example.com/lofi" target="_blank" rel="noopener">View Our Lo-Fi Designs!</a>
+        <a class="process-link" href="https://drive.google.com/file/d/1bvDWr6qnVVmqz2l_Yu8KBOlw7hAisC1R/view?usp=sharing" target="_blank" rel="noopener">View Our Lo-Fi Designs!</a>
+        <a class="process-link alt" href="https://docs.google.com/presentation/d/1kIisE-GiJkyu7ZuPYGJ_EN-LDj5MLdrv-fB1i5Fero0/edit?usp=sharing" target="_blank" rel="noopener">See Our Presentation!</a>
       </div>
     </article>
-
+<!-- 
     <article class="process-card fade-up delay-1">
       <div class="process-thumb">
         <img src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=900&q=80" alt="Med-Fi">
@@ -848,7 +921,7 @@
         <a class="process-link" href="https://example.com/poster-pitch" target="_blank" rel="noopener">View Our Poster &amp; Pitch!</a>
       </div>
     </article>
-  </div>
+  </div> -->
 </section>
 
 <section id="video">
@@ -940,6 +1013,83 @@
   }, { threshold: 0.1 });
 
   document.querySelectorAll('.fade-up').forEach((el) => obs.observe(el));
+
+  const aboutCarousel = document.getElementById('aboutCarousel');
+  const aboutDots = document.querySelectorAll('.about-dot');
+
+  if (aboutCarousel && aboutDots.length) {
+    let aboutIndex = 0;
+    let aboutStartX = 0;
+    let aboutCurrentX = 0;
+    let aboutDragging = false;
+
+    const setAboutSlide = (index) => {
+      aboutIndex = Math.max(0, Math.min(index, aboutDots.length - 1));
+      aboutCarousel.style.transition = 'transform 0.35s ease';
+      aboutCarousel.style.transform = `translateX(-${aboutIndex * 100}%)`;
+      aboutDots.forEach((dot, dotIndex) => {
+        dot.classList.toggle('active', dotIndex === aboutIndex);
+      });
+    };
+
+    const startAboutDrag = (clientX) => {
+      aboutDragging = true;
+      aboutStartX = clientX;
+      aboutCurrentX = clientX;
+      aboutCarousel.style.transition = 'none';
+    };
+
+    const moveAboutDrag = (clientX) => {
+      if (!aboutDragging) return;
+      aboutCurrentX = clientX;
+      const deltaX = aboutCurrentX - aboutStartX;
+      aboutCarousel.style.transform = `translateX(calc(-${aboutIndex * 100}% + ${deltaX}px))`;
+    };
+
+    const endAboutDrag = () => {
+      if (!aboutDragging) return;
+      aboutDragging = false;
+      const deltaX = aboutCurrentX - aboutStartX;
+      const threshold = 50;
+
+      if (deltaX < -threshold && aboutIndex < aboutDots.length - 1) {
+        setAboutSlide(aboutIndex + 1);
+      } else if (deltaX > threshold && aboutIndex > 0) {
+        setAboutSlide(aboutIndex - 1);
+      } else {
+        setAboutSlide(aboutIndex);
+      }
+    };
+
+    aboutDots.forEach((dot) => {
+      dot.addEventListener('click', () => {
+        setAboutSlide(Number(dot.dataset.aboutSlide));
+      });
+    });
+
+    aboutCarousel.addEventListener('touchstart', (event) => {
+      startAboutDrag(event.touches[0].clientX);
+    }, { passive: true });
+
+    aboutCarousel.addEventListener('touchmove', (event) => {
+      moveAboutDrag(event.touches[0].clientX);
+    }, { passive: true });
+
+    aboutCarousel.addEventListener('touchend', endAboutDrag);
+
+    aboutCarousel.addEventListener('mousedown', (event) => {
+      startAboutDrag(event.clientX);
+    });
+
+    window.addEventListener('mousemove', (event) => {
+      moveAboutDrag(event.clientX);
+    });
+
+    window.addEventListener('mouseup', endAboutDrag);
+    window.addEventListener('mouseleave', endAboutDrag);
+
+    setAboutSlide(0);
+  }
 </script>
 </body>
 </html>
