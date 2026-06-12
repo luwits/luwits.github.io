@@ -576,8 +576,30 @@
   .team-avatar {
     width: 70px; height: 70px; border-radius: 50%;
     margin: 0 auto 1rem;
+    position: relative;
+    overflow: hidden;
     display: flex; align-items: center; justify-content: center;
     font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; color: white;
+    box-shadow: 0 10px 24px rgba(42,26,14,0.12);
+  }
+
+  .team-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .team-avatar-fallback {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .team-avatar.has-image .team-avatar-fallback {
+    display: none;
   }
   .av-1 { background: linear-gradient(135deg, var(--orange), var(--red)); }
   .av-2 { background: linear-gradient(135deg, #F5A623, var(--orange)); }
@@ -951,27 +973,42 @@
 
   <div class="team-grid">
     <div class="team-card fade-up">
-      <div class="team-avatar av-1"></div>
+      <div class="team-avatar av-1 has-image">
+        <img src="Aida.jpg" alt="Foto Ary Ratna Aida Safa" onerror="this.remove(); this.parentElement.classList.remove('has-image');">
+        <span class="team-avatar-fallback">AA</span>
+      </div>
       <h3>Ary Ratna Aida Safa</h3>
       <div class="team-nrp">5026241029</div>
     </div>
     <div class="team-card fade-up delay-1">
-      <div class="team-avatar av-2">MW</div>
+      <div class="team-avatar av-2 has-image">
+        <img src="Mila.jpg" alt="Foto Milawati" onerror="this.remove(); this.parentElement.classList.remove('has-image');">
+        <span class="team-avatar-fallback">MW</span>
+      </div>
       <h3>Milawati</h3>
       <div class="team-nrp">5026241163</div>
     </div>
     <div class="team-card fade-up delay-2">
-      <div class="team-avatar av-3">BN</div>
+      <div class="team-avatar av-3 has-image">
+        <img src="team-benedictus.jpg" alt="Foto Benedictus Nicholas" onerror="this.remove(); this.parentElement.classList.remove('has-image');">
+        <span class="team-avatar-fallback">BN</span>
+      </div>
       <h3>Benedictus Nicholas</h3>
       <div class="team-nrp">5026241187</div>
     </div>
     <div class="team-card fade-up delay-3">
-      <div class="team-avatar av-4">IBP</div>
+      <div class="team-avatar av-4 has-image">
+        <img src="yudha.jpg" alt="Foto Ida Bagus Putu Dharma Yudhana" onerror="this.remove(); this.parentElement.classList.remove('has-image');">
+        <span class="team-avatar-fallback">IBP</span>
+      </div>
       <h3>Ida Bagus Putu Dharma Yudhana</h3>
       <div class="team-nrp">5026241195</div>
     </div>
     <div class="team-card fade-up delay-4">
-      <div class="team-avatar av-5">YK</div>
+      <div class="team-avatar av-5 has-image">
+        <img src="Yossi.jpeg" alt="Foto Yossi Kurniawan" onerror="this.remove(); this.parentElement.classList.remove('has-image');">
+        <span class="team-avatar-fallback">YK</span>
+      </div>
       <h3>Yossi Kurniawan</h3>
       <div class="team-nrp">5026241202</div>
     </div>
